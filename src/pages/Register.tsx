@@ -1,23 +1,27 @@
 import { styled } from "styled-components";
 
-const Login = () => {
+const Register = () => {
   return (
     <Root>
-      <Title>너와 나</Title>
-      <LoginInput>
+      <Title>회원가입</Title>
+      <RegisterInput>
+        <Label htmlFor="nickname">nickname</Label>
+        <Input type="text" id="nickname" />
+      </RegisterInput>
+      <RegisterInput>
         <Label htmlFor="id">id</Label>
         <Input type="text" id="id" />
-      </LoginInput>
-      <LoginInput>
+      </RegisterInput>
+      <RegisterInput>
         <Label htmlFor="password">password</Label>
         <Input type="password" id="password" />
-      </LoginInput>
-      <Button>login</Button>
+      </RegisterInput>
+      <Button>register</Button>
     </Root>
   );
 };
 
-export default Login;
+export default Register;
 
 const Root = styled.form`
   display: flex;
@@ -34,7 +38,7 @@ const Title = styled.h2`
   font-size: 30px;
 `;
 
-const LoginInput = styled.div`
+const RegisterInput = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
