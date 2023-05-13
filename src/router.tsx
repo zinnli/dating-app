@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Like, LikeList, Login, Mypage, Register } from "./pages";
-import { LayoutRouter } from "./components";
+import { LayoutRouter } from "./components/common";
 
 export default function Router() {
   return (
