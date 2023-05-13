@@ -1,41 +1,42 @@
 import React, { useState } from "react";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 const LikeList = () => {
   const [tab, setTab] = useState("send");
   return (
     <Root>
       <CommunityWrapper>
-        <Title onClick={() => setTab("send")}>send</Title>
-        <Title onClick={() => setTab("receive")}>receive</Title>
+        <Title onClick={() => setTab("send")}>받은 하트</Title>
+        <Title onClick={() => setTab("receive")}>보낸 하트</Title>
       </CommunityWrapper>
       {tab === "send" ? (
-        <SendWrapper id="send">
+        <BoxWrapper id="send">
           <ListItem>
             <Image>사진</Image>
-            <Name>nickname</Name>
-            <CancelBtn>cancel</CancelBtn>
+            <Name>닉네임</Name>
+            <ConfirmBtn>받기</ConfirmBtn>
           </ListItem>
           <ListItem>
             <Image>사진</Image>
-            <Name>nickname</Name>
-            <CancelBtn>cancel</CancelBtn>
+            <Name>닉네임</Name>
+            <ConfirmBtn>받기</ConfirmBtn>
           </ListItem>
-        </SendWrapper>
+        </BoxWrapper>
       ) : (
-        <ReceiveWrapper id="receive">
+        <BoxWrapper id="receive">
           <ListItem>
             <Image>사진</Image>
-            <Name>nickname</Name>
-            <CancelBtn>receive</CancelBtn>
+            <Name>닉네임</Name>
+            <ConfirmBtn>취소</ConfirmBtn>
           </ListItem>
           <ListItem>
             <Image>사진</Image>
-            <Name>nickname</Name>
-            <CancelBtn>receive</CancelBtn>
+            <Name>닉네임</Name>
+            <ConfirmBtn>취소</ConfirmBtn>
           </ListItem>
-        </ReceiveWrapper>
+        </BoxWrapper>
       )}
+      <Pagination>1</Pagination>
     </Root>
   );
 };
@@ -45,58 +46,82 @@ export default LikeList;
 const Root = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 30px;
 `;
 
 const CommunityWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 100%;
-  margin-bottom: 40px;
+  margin: 30px 0;
 `;
 
-const SendWrapper = styled.div`
+const BoxWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
-`;
-
-const ReceiveWrapper = styled.div`
-  width: 100%;
+  height: 100%;
+  padding-bottom: 20px;
 `;
 
 const Title = styled.button`
-  margin: 20px 0;
-  font-size: 20px;
+  ${({ theme }) => css`
+    margin: 20px 0;
+    font: ${theme.font.bold_14};
+  `}
 `;
 
 const ListItem = styled.div`
-  display: grid;
-  grid-template-columns: 60px 1fr 80px;
-  gap: 10px;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
+  ${({ theme }) => css`
+    display: grid;
+    grid-template-columns: 40px 1fr 50px;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    border: 2px solid ${theme.color.yellow_01};
+    border-radius: 2px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    background-color: ${theme.color.white};
+  `}
 `;
 
 const Image = styled.div`
-  width: 60px;
-  height: 60px;
-  background-color: beige;
+  ${({ theme }) => css`
+    width: 35px;
+    height: 35px;
+    border-radius: 2px;
+    background-color: ${theme.color.yellow_01};
+  `}
 `;
 
 const Name = styled.p`
-  height: fit-content;
-  font-size: 15px;
+  ${({ theme }) => css`
+    height: fit-content;
+    font: ${theme.font.regular_12};
+  `}
 `;
 
-const CancelBtn = styled.button`
-  border-radius: 5px;
-  padding: 5px 8px;
-  margin: 10px 0;
-  font-size: 15px;
-  color: #fff;
-  background-color: skyblue;
+const ConfirmBtn = styled.button`
+  ${({ theme }) => css`
+    border-radius: 2px;
+    padding: 5px;
+    margin: 10px 0;
+    font: ${theme.font.regular_12};
+    color: ${theme.color.white};
+    background-color: ${theme.color.yellow_01};
+  `}
+`;
+
+const Pagination = styled.div`
+  ${({ theme }) => css`
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    background-color: ${theme.color.red_01};
+  `}
 `;

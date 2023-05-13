@@ -1,22 +1,22 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 const Register = () => {
   return (
     <Root>
       <Title>회원가입</Title>
       <RegisterInput>
-        <Label htmlFor="nickname">nickname</Label>
-        <Input type="text" id="nickname" />
-      </RegisterInput>
-      <RegisterInput>
-        <Label htmlFor="id">id</Label>
+        <Label htmlFor="id">아이디</Label>
         <Input type="text" id="id" />
       </RegisterInput>
       <RegisterInput>
-        <Label htmlFor="password">password</Label>
+        <Label htmlFor="password">비밀번호</Label>
         <Input type="password" id="password" />
       </RegisterInput>
-      <Button>register</Button>
+      <RegisterInput>
+        <Label htmlFor="nickname">닉네임</Label>
+        <Input type="text" id="nickname" />
+      </RegisterInput>
+      <Button>회원가입</Button>
     </Root>
   );
 };
@@ -34,32 +34,43 @@ const Root = styled.form`
 `;
 
 const Title = styled.h2`
-  margin-bottom: 40px;
-  font-size: 30px;
+  ${({ theme }) => css`
+    margin-bottom: 30px;
+    font: ${theme.font.bold_16};
+  `}
 `;
 
 const RegisterInput = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 250px;
+  width: 100%;
+  width: 280px;
 `;
 
 const Label = styled.label`
-  margin-bottom: 5px;
-  font-size: 15px;
+  ${({ theme }) => css`
+    margin-bottom: 5px;
+    font: ${theme.font.regular_12};
+  `}
 `;
 
 const Input = styled.input`
-  width: 100%;
-  height: 40px;
+  ${({ theme }) => css`
+    width: 100%;
+    height: 40px;
+    border: 1px solid ${theme.color.gray_01};
+    border-radius: 2px;
+  `}
 `;
 
 const Button = styled.button`
-  width: 250px;
-  padding: 10px;
-  margin: 20px 0;
-  font-size: 15px;
-  color: #fff;
-  background-color: cadetblue;
+  ${({ theme }) => css`
+    width: 280px;
+    padding: 10px;
+    margin: 20px 0 0 0;
+    font: ${theme.font.regular_13};
+    color: ${theme.color.white};
+    background-color: ${theme.color.yellow_01};
+  `}
 `;
