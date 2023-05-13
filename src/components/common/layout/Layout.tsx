@@ -1,6 +1,5 @@
-import { Children } from "react";
-import { Outlet } from "react-router-dom";
 import { styled } from "styled-components";
+
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
@@ -29,6 +28,7 @@ const Root = styled.main`
 
 const RouteLayout = styled.div`
   width: 450px;
-  min-height: calc(100vh - 60px);
-  background-color: #fff;
+  min-height: calc(100vh - 100px);
+  background-color: #f9f9f9;
+  padding: 0 85px;
 `;
