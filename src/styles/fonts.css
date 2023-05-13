@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "SUITE-Regular";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../assets/fonts/SUITE--Regular.otf");
+  src: url("../assets/fonts/SUITE--Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "SUITE-Medium";
+  font-weight: 500;
+  font-style: normal;
+  src: url("../assets/fonts/SUITE--Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "SUITE-SemiBold";
+  font-weight: 600;
+  font-style: normal;
+  src: url("../assets/fonts/SUITE--SemiBold.otf") format("opentype");
+}

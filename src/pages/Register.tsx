@@ -1,25 +1,27 @@
-import { Link } from "react-router-dom";
 import { css, styled } from "styled-components";
 
-const Login = () => {
+const Register = () => {
   return (
     <Root>
-      <Title>💛</Title>
-      <LoginInput>
+      <Title>회원가입</Title>
+      <RegisterInput>
         <Label htmlFor="id">아이디</Label>
         <Input type="text" id="id" />
-      </LoginInput>
-      <LoginInput>
+      </RegisterInput>
+      <RegisterInput>
         <Label htmlFor="password">비밀번호</Label>
         <Input type="password" id="password" />
-      </LoginInput>
-      <Button>로그인</Button>
-      <RegisterLink to="/register">회원은 아직이신가요?</RegisterLink>
+      </RegisterInput>
+      <RegisterInput>
+        <Label htmlFor="nickname">닉네임</Label>
+        <Input type="text" id="nickname" />
+      </RegisterInput>
+      <Button>회원가입</Button>
     </Root>
   );
 };
 
-export default Login;
+export default Register;
 
 const Root = styled.form`
   display: flex;
@@ -33,12 +35,12 @@ const Root = styled.form`
 
 const Title = styled.h2`
   ${({ theme }) => css`
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     font: ${theme.font.bold_16};
   `}
 `;
 
-const LoginInput = styled.div`
+const RegisterInput = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -70,12 +72,5 @@ const Button = styled.button`
     font: ${theme.font.regular_13};
     color: ${theme.color.white};
     background-color: ${theme.color.yellow_01};
-  `}
-`;
-
-const RegisterLink = styled(Link)`
-  ${({ theme }) => css`
-    align-self: flex-end;
-    color: ${theme.color.gray_02};
   `}
 `;
