@@ -31,6 +31,19 @@ const GlobalStyles = createGlobalStyle`
         background: transparent;
         cursor: pointer;
     }
+    input {
+        padding: 0 10px;
+
+        &::placeholder{
+            color: #BFBFBF;
+        }
+
+        &:focus{
+        background-color: #fff;
+        border: 1px solid #FFD335;
+        outline: 0;
+        }
+    }
 `;
 
 export default GlobalStyles;

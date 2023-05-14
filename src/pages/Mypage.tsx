@@ -1,6 +1,6 @@
 import { PencilIcon } from "assets";
 import React from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 import { Theme } from "types/declare/theme";
 
 const Mypage = () => {

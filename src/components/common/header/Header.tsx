@@ -1,5 +1,5 @@
 import React from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ArrowIcon, DotsIcon, HeartIcon, UserIcon } from "assets/icons";
 

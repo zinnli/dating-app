@@ -1,5 +1,6 @@
 const color = {
   yellow_01: "#FFE27B",
+  yellow_02: "#FFD335",
   black: "#454545",
   gray_background: "#FCFCFC",
   gray_01: "#f2f2f2",
@@ -13,6 +14,7 @@ const color = {
 };
 
 const font = {
+  regular_8: "400 1.0rem/1.33333 'SUITE'", // 12px
   regular_12: "400 1.2rem/1.4166 'SUITE'", // 14px
   regular_13: "400 1.3rem/1.30769 'SUITE'", // 15px
   regular_14: "400 1.4rem/1.21428 'SUITE'", // 16px
