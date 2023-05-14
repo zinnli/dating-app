@@ -23,8 +23,8 @@ const Login = () => {
 
   const { mutate: Login } = useMutation(login, {
     onSuccess: (res: any) => {
-      console.log("success", res);
-      navigate("/like");
+      localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("refreshToken", res.refreshToken);
     },
     onError: (err: any) => {
       alert(err.response.data.message);
@@ -32,10 +32,17 @@ const Login = () => {
   });
 
   const handleLogin = (data: any) => {
-    Login({
-      userId: data.userId,
-      password: data.password,
-    });
+    Login(
+      {
+        userId: data.userId,
+        password: data.password,
+      },
+      {
+        onSuccess: () => {
+          navigate("/like");
+        },
+      }
+    );
   };
 
   return (
