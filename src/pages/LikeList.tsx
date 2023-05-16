@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
 const LikeList = () => {
   const [tab, setTab] = useState("send");
