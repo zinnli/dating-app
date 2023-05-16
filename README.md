@@ -7,5 +7,6 @@
 ```bash
 $ npx create-react-app my-app --template typescript
 $ npm i react-router-dom
-$ npm install styled-components@latest
+$ npm i --save-dev @types/styled-components
+$ npm i sweetalert2
 ```

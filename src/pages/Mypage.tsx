@@ -1,14 +1,23 @@
-import { PencilIcon } from "assets";
 import React from "react";
+import { useQuery } from "react-query";
 import styled, { css } from "styled-components";
+
+import { getUser } from "apis/axios";
+import { PencilIcon } from "assets";
 import { Theme } from "types/declare/theme";
 
 const Mypage = () => {
+  const { data } = useQuery(["mypage"], getUser, {
+    refetchOnWindowFocus: false,
+  });
+
   return (
     <Root>
-      <ImgWrapper>사진</ImgWrapper>
+      <ImgWrapper>
+        <img src={data?.profileImgUrl} />
+      </ImgWrapper>
       <MyWrapper>
-        <Name>글자수테스트몇글자까지되나</Name>
+        <Name>{data?.nickname}</Name>
         <ModalBtn>
           <PencilIcon />
         </ModalBtn>
@@ -62,6 +71,7 @@ const MyWrapper = styled.div`
 
 const Name = styled.p`
   ${({ theme }) => css`
+    padding-left: 30px;
     text-align: center;
     font: ${theme.font.medium_13};
   `}
