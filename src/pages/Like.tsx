@@ -1,4 +1,4 @@
-import { getMember, patchDislike, patchLike } from "apis/axios";
+import { getMember, patchDislike, patchLike } from "apis";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import styled, { css } from "styled-components";

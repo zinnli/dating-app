@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 
-import { signup } from "apis/axios";
+import { signup } from "apis";
 
 const Register = () => {
   const navigate = useNavigate();
