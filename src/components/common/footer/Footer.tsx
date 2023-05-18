@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { SmileIcon } from "assets";
+import { SparkleIcon } from "assets";
 
 const Footer = () => {
   return (
     <Root>
       <IconWrapper>
         <Link to="https://zinnli.github.io/" target="_blank" rel="noopener">
-          <SmileIcon />
+          <SparkleIcon />
         </Link>
         <Link to="https://github.com/zinnli" target="_blank" rel="noopener">
           zinnli
@@ -37,7 +37,9 @@ const IconWrapper = styled.div`
     margin: 10px 15px 0 0;
 
     & > a {
-      ${theme.font.medium_13};
+      display: flex;
+      align-items: center;
+      font: ${theme.font.medium_13};
 
       & > svg {
         height: 30px;
