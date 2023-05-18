@@ -16,3 +16,8 @@ export const patchDislike = async (req: any) => {
 
   return data;
 };
+
+export const getAffinity = async () => {
+  const { data } = await ax.get("/affinity/list");
+  return data;
+};
