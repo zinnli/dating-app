@@ -71,22 +71,20 @@ const Root = styled.section`
 `;
 
 const ImgWrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 230px;
-    width: 230px;
-    margin-bottom: 20px;
-    /* background-color: ${theme.color.yellow_01}; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 250px;
+  margin-bottom: 20px;
 
-    & > img{
-      height: : 230px;
-      width: 230px;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-  `}
+  & > img {
+    height: 250px;
+    width: 250px;
+    border-radius: 2px;
+    object-fit: cover;
+    overflow: hidden;
+  }
 `;
 
 const NameWrapper = styled.div`
