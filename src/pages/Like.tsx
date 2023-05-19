@@ -1,18 +1,61 @@
-import React from "react";
+import { getMember, patchDislike, patchLike } from "apis";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import styled, { css } from "styled-components";
 
 const Like = () => {
+  const [idx, setIdx] = useState(0);
+  const { data } = useQuery(["members"], getMember, {
+    enabled: true,
+  });
+
+  const { mutate: PatchLike } = useMutation(patchLike, {
+    onSuccess: (res: any) => {
+      setIdx(idx + 1);
+    },
+    onError: (err: any) => {
+      console.log(err.response.data.message);
+    },
+  });
+
+  const { mutate: PatchDislike } = useMutation(patchDislike, {
+    onSuccess: (res: any) => {
+      setIdx(idx + 1);
+    },
+    onError: (err: any) => {
+      console.log(err.response.data.message);
+    },
+  });
+
+  const handleLike = () => {
+    PatchLike({
+      targetUserId: data[idx].userId,
+    });
+  };
+  const handleDislike = () => {
+    PatchDislike({
+      targetUserId: data[idx].userId,
+    });
+  };
+
   return (
-    <Root>
-      <ImgWrapper>이미지</ImgWrapper>
-      <NameWrapper>
-        <Name>닉네임</Name>
-      </NameWrapper>
-      <ButtonWrapper>
-        <DisLikeBtn>싫어요 :(</DisLikeBtn>
-        <LikeBtn>좋아요 :D</LikeBtn>
-      </ButtonWrapper>
-    </Root>
+    <>
+      {data &&
+        data.slice(idx, idx + 1).map((item: any) => (
+          <Root key={item.userId}>
+            <ImgWrapper>
+              <img src={item.profileImgUrl} />
+            </ImgWrapper>
+            <NameWrapper>
+              <Name>{item.nickname}</Name>
+            </NameWrapper>
+            <ButtonWrapper>
+              <DisLikeBtn onClick={handleDislike}>싫어요 :(</DisLikeBtn>
+              <LikeBtn onClick={handleLike}>좋아요 :D</LikeBtn>
+            </ButtonWrapper>
+          </Root>
+        ))}
+    </>
   );
 };
 
@@ -34,9 +77,15 @@ const ImgWrapper = styled.div`
     align-items: center;
     height: 230px;
     width: 230px;
-    border-radius: 2px;
     margin-bottom: 20px;
-    background-color: ${theme.color.yellow_01};
+    /* background-color: ${theme.color.yellow_01}; */
+
+    & > img{
+      height: : 230px;
+      width: 230px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
   `}
 `;
 

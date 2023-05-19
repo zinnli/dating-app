@@ -6,43 +6,29 @@ const instance = axios.create({
   baseURL: process.env.REACT_APP_AXIOS_API,
 });
 
-instance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
-  if (accessToken) {
-    config.headers["Authorization"] = accessToken;
-  }
-  return config;
-});
+const createInstance = () => {
+  return setInterceptors(instance);
+};
+
+const setInterceptors = (instance: any) => {
+  instance.interceptors.request.use((config: any) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers["Authorization"] = accessToken;
+    }
+    return config;
+  });
+  return instance;
+};
+
+export const ax = createInstance();
 
 export const test = async () => {
   const { data } = await instance.get("/test");
   return data;
 };
 
-export const signup = async (req: any) => {
-  const { data } = await instance.post("/auth/signup", {
-    userId: req.userId,
-    nickname: req.nickname,
-    password: req.password,
-  });
-
-  return data;
-};
-
-export const login = async (req: any) => {
-  const { data } = await instance.post("/auth/signin", {
-    userId: req.userId,
-    password: req.password,
-  });
-
-  return data;
-};
-
 export const getUser = async () => {
-  const { data } = await instance.get("/auth/user", {
-    headers: {
-      Authorization: localStorage.getItem("accessToken"),
-    },
-  });
+  const { data } = await ax.get("/auth/user");
   return data;
 };
