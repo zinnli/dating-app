@@ -52,6 +52,7 @@ const Root = styled.div`
     width: 450px;
     height: 50px;
     background-color: ${theme.color.white};
+    z-index: 10;
   `}
 `;
 

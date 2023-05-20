@@ -30,6 +30,7 @@ const Root = styled.div`
     height: 50px;
     width: 450px;
     background-color: ${theme.color.white};
+    z-index: 10;
   `}
 `;
 

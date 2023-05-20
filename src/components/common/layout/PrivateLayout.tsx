@@ -30,4 +30,5 @@ const RouteLayout = styled.div`
   min-height: calc(100vh - 100px);
   background-color: #f9f9f9;
   padding: 0 85px;
+  overflow-y: auto;
 `;
