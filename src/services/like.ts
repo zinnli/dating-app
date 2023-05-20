@@ -20,9 +20,6 @@ export const useGetMember = () => {
   return useQuery({
     queryKey: ["member"],
     queryFn: () => getMember(),
-    select: (res) => ({
-      ...res,
-    }),
     refetchOnWindowFocus: false,
     staleTime: 5000,
     cacheTime: Infinity,

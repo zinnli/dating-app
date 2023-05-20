@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
 import styled, { css } from "styled-components";
 
 import { ModalPortal, MypageModal } from "components";
 import { PencilIcon } from "assets";
-import { Theme } from "types/declare/theme";
-import { getUser } from "apis";
 import { useGetUser } from "services";
+import { Theme } from "types/declare/theme";
 
 const Mypage = () => {
   const navigate = useNavigate();

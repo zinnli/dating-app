@@ -22,6 +22,8 @@ const LikeList = () => {
     setTab,
   } = usePagination(data);
 
+  if (!data) return null;
+
   return (
     <Root>
       <CommunityWrapper>
@@ -128,6 +130,7 @@ const Image = styled.img`
     height: 45px;
     border-radius: 2px;
     background-color: ${theme.color.yellow_01};
+    object-fit: contain;
   `}
 `;
 
