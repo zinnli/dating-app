@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import {
@@ -9,27 +9,36 @@ import {
   HomeIcon,
   UserIcon,
 } from "assets/icons";
+import LinkButton from "../button/LinkButton";
+import ModalPortal from "../portal/ModalPortal";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState<boolean>();
+
+  const ClickHandleBack = () => {
+    navigate(-1);
+  };
+
+  const HandleLoginCheck = () => {
+    setModalOpen(true);
+    return;
+  };
+
+  const HandleModalShow = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Root>
       <IconWrapper>
-        <Link to="/like">
+        <Button onClick={ClickHandleBack}>
           <ArrowIcon />
-        </Link>
-        <Link to="/likelist">
-          <HomeIcon />
-        </Link>
+        </Button>
+        <LinkButton path="/like" icon={<HomeIcon />} />
         <IconRigthWrapper>
-          <Link to="/like">
-            <HeartIcon />
-          </Link>
-          <Link to="/mypage">
-            <UserIcon />
-          </Link>
-          <Link to="/likelist">
-            <DotsIcon />
-          </Link>
+          <LinkButton path="/likelist" icon={<HeartIcon />} />
+          <LinkButton path="/mypage" icon={<UserIcon />} />
         </IconRigthWrapper>
       </IconWrapper>
     </Root>
@@ -43,6 +52,7 @@ const Root = styled.div`
     width: 450px;
     height: 50px;
     background-color: ${theme.color.white};
+    z-index: 10;
   `}
 `;
 
@@ -54,11 +64,26 @@ const IconWrapper = styled.div`
     align-items: center;
     margin-top: 5px;
 
-    & > a:nth-of-type(2) {
+    & > a:nth-of-type(1) {
       text-align: center;
     }
 
     & > a > svg {
+      height: 30px;
+      width: 30px;
+      margin: 5px 20px;
+
+      & > path {
+        stroke: ${theme.color.black};
+      }
+    }
+  `}
+`;
+
+const Button = styled.button`
+  ${({ theme }) => css`
+    text-align: start;
+    & > svg {
       height: 30px;
       width: 30px;
       margin: 5px 20px;
@@ -75,6 +100,8 @@ const IconRigthWrapper = styled.div`
     display: flex;
     justify-content: end;
     align-items: center;
+    width: 150px;
+    height: 40px;
 
     & > a > svg {
       height: 30px;
@@ -87,7 +114,7 @@ const IconRigthWrapper = styled.div`
     }
 
     & > a:last-of-type > svg {
-      margin: 0 7px 0 0;
+      margin: 0 15px 0 0;
     }
   `}
 `;

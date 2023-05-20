@@ -64,6 +64,6 @@ const Input = styled.input<{ isError?: boolean }>`
     height: 40px;
     border: 1px solid ${isError ? theme.color.red_02 : theme.color.gray_01};
     border-radius: 2px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   `}
 `;

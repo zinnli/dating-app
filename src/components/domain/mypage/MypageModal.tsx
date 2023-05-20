@@ -14,19 +14,6 @@ interface MypageModalProps {
 const MypageModal = ({ onClose }: MypageModalProps) => {
   const queryClient = useQueryClient();
 
-  const [profileImgUrl, setProfileImgUrl] = useState("");
-
-  // 파일 저장
-  const saveFileImage = (e: any) => {
-    setProfileImgUrl(URL.createObjectURL(e.target.files[0]));
-  };
-
-  // 파일 삭제
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(profileImgUrl);
-    setProfileImgUrl("");
-  };
-
   const { data } = useQuery(["mypage"], getUser, {
     refetchOnWindowFocus: false,
     staleTime: 5000,
@@ -41,7 +28,7 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
   } = useForm({
     mode: "all",
     defaultValues: {
-      nickname: "",
+      nickname: `${data.nickname}`,
       profileImgUrl: "",
     },
   });
@@ -56,7 +43,6 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
   });
 
   const submitHandleMyInfo = (data: any) => {
-    const formData = new FormData();
     ChangeInfo(
       {
         nickname: data.nickname,
@@ -75,30 +61,34 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
 
   return (
     <Root>
-      <CancelBtn type="button" onClick={onClose}>
-        <CancelIcon />
-      </CancelBtn>
-      <FormWapper onSubmit={handleSubmit(submitHandleMyInfo)}>
-        <FormInput
-          id="nickname"
-          name="닉네임"
-          defaultValue={data.nickname}
-          register={register("nickname")}
-        />
-        <ImgWrapper
-          type="file"
-          id="profileImgUrl"
-          name="이미지 업로드"
-          accept="image/*"
-          register={register("profileImgUrl", {
-            onChange: (e) => {
-              saveFileImage(e);
-            },
-          })}
-        />
-        <ImgPreview src={profileImgUrl} />
-        <Button disabled={Object.keys(errors).length !== 0}>수정</Button>
-      </FormWapper>
+      <ModalWrapper>
+        <CancelBtn type="button" onClick={onClose}>
+          <CancelIcon />
+        </CancelBtn>
+        <FormWapper onSubmit={handleSubmit(submitHandleMyInfo)}>
+          <FormInput
+            id="nickname"
+            name="닉네임"
+            register={register("nickname")}
+          />
+          <ImgWrapper
+            type="text"
+            id="profileImgUrl"
+            name="이미지 업로드"
+            placeholder="이미지 링크를 입력해주세요."
+            register={register("profileImgUrl")}
+          />
+          <ImgPreview
+            defaultValue={data.profileImgUrl}
+            src={
+              !!watch("profileImgUrl")
+                ? watch("profileImgUrl")
+                : data.profileImgUrl
+            }
+          />
+          <Button disabled={Object.keys(errors).length !== 0}>수정</Button>
+        </FormWapper>
+      </ModalWrapper>
     </Root>
   );
 };
@@ -107,7 +97,19 @@ export default MypageModal;
 
 const Root = styled.div`
   ${({ theme }) => css`
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 20;
+  `}
+`;
+
+const ModalWrapper = styled.div`
+  ${({ theme }) => css`
+    position: fixed;
     top: 50%;
     left: 50%;
     height: 500px;
@@ -115,6 +117,7 @@ const Root = styled.div`
     padding: 10px;
     transform: translate(-50%, -50%);
     background-color: ${theme.color.white};
+    z-index: 5;
   `}
 `;
 
@@ -158,17 +161,15 @@ const Button = styled.button`
 `;
 
 const ImgWrapper = styled(FormInput)`
-  ${({ theme }) => css`
-    & > input {
-      border: 0;
-      margin: 0;
-    }
-  `}
+  ${({ theme }) => css``}
 `;
 
 const ImgPreview = styled.img`
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  border: 1px solid red;
+  ${({ theme }) => css`
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border: 1px solid ${theme.color.gray_01};
+    background-color: ${theme.color.white};
+  `}
 `;

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 
 import { login } from "apis";
+import { FormInput } from "components";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,33 +52,26 @@ const Login = () => {
       onSubmit={handleSubmit(handleLogin)}
     >
       <Title>💛</Title>
-      <LoginInput>
-        <Label htmlFor="userId">아이디</Label>
-        <Input
-          type="text"
-          id="userId"
-          value={watch("userId")}
-          isError={!!errors.userId}
-          placeholder="아이디를 입력하세요"
-          {...register("userId", {
-            required: "아이디를 입력해주세요",
-          })}
-        />
-      </LoginInput>
-      <LoginInput>
-        <Label htmlFor="password">비밀번호</Label>
-        <Input
-          type="password"
-          id="password"
-          value={watch("password")}
-          isError={!!errors.password}
-          placeholder="비밀번호를 입력하세요"
-          {...register("password", {
-            required: "비밀번호를 입력해주세요",
-          })}
-        />
-      </LoginInput>
-
+      <FormInput
+        type="text"
+        id="userId"
+        name="아이디"
+        isError={!!errors.userId}
+        placeholder="아이디를 입력하세요"
+        register={register("userId", {
+          required: "아이디를 입력해주세요",
+        })}
+      />
+      <FormInput
+        type="password"
+        id="password"
+        name="비밀번호"
+        isError={!!errors.password}
+        placeholder="비밀번호를 입력해주세요"
+        register={register("password", {
+          required: "비밀번호를 입력해주세요",
+        })}
+      />
       <ErrorMsg>
         {(errors.userId || errors.password) && "빈칸을 입력해주세요"}
       </ErrorMsg>
@@ -124,16 +118,6 @@ const Label = styled.label`
   ${({ theme }) => css`
     margin-bottom: 5px;
     font: ${theme.font.regular_12};
-  `}
-`;
-
-const Input = styled.input<{ isError?: boolean }>`
-  ${({ theme, isError }) => css`
-    width: 100%;
-    height: 40px;
-    border: 1px solid ${isError ? theme.color.red_02 : theme.color.gray_01};
-    border-radius: 2px;
-    margin-bottom: 25px;
   `}
 `;
 
