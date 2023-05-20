@@ -4,9 +4,9 @@ import { useQuery } from "react-query";
 import styled, { css } from "styled-components";
 
 import { ModalPortal, MypageModal } from "components";
-import { getUser } from "apis/axios";
 import { PencilIcon } from "assets";
 import { Theme } from "types/declare/theme";
+import { getUser } from "apis";
 
 const Mypage = () => {
   const navigate = useNavigate();
