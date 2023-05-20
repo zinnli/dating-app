@@ -1,44 +1,46 @@
-import { AxiosError } from "axios";
 import React, { useState } from "react";
-import { useMutation, useQuery } from "react-query";
 import styled, { css } from "styled-components";
 
-import { getMember, patchDislike, patchLike } from "apis";
 import type { PatchLikeType } from "types";
+import { useGetMember, usePatchDislike, usePatchLike } from "services";
 
 const Like = () => {
   const [idx, setIdx] = useState(0);
-  const { data } = useQuery(["members"], getMember, {
-    enabled: true,
-  });
 
-  const { mutate: PatchLike } = useMutation(patchLike, {
-    onSuccess: () => {
-      setIdx(idx + 1);
-    },
-    onError: (err: any) => {
-      console.log(err.response.data.message);
-    },
-  });
-
-  const { mutate: PatchDislike } = useMutation(patchDislike, {
-    onSuccess: () => {
-      setIdx(idx + 1);
-    },
-    onError: (err: any) => {
-      console.log(err.response.data.message);
-    },
-  });
+  const { data } = useGetMember();
+  const { mutate: PatchLike } = usePatchLike();
+  const { mutate: PatchDislike } = usePatchDislike();
 
   const handleLike = () => {
-    PatchLike({
-      targetUserId: data[idx].userId,
-    });
+    PatchLike(
+      {
+        targetUserId: data[idx].userId,
+      },
+      {
+        onSuccess: () => {
+          setIdx(idx + 1);
+        },
+        onError: (err: any) => {
+          console.log(err.response.data.message);
+        },
+      }
+    );
   };
+
   const handleDislike = () => {
-    PatchDislike({
-      targetUserId: data[idx].userId,
-    });
+    PatchDislike(
+      {
+        targetUserId: data[idx].userId,
+      },
+      {
+        onSuccess: () => {
+          setIdx(idx + 1);
+        },
+        onError: (err: any) => {
+          console.log(err.response.data.message);
+        },
+      }
+    );
   };
 
   return (
