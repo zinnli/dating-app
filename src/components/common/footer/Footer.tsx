@@ -3,14 +3,18 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { SparkleIcon } from "assets";
+import LinkButton from "../button/LinkButton";
 
 const Footer = () => {
   return (
     <Root>
       <IconWrapper>
-        <Link to="https://zinnli.github.io/" target="_blank" rel="noopener">
-          <SparkleIcon />
-        </Link>
+        <LinkButton
+          icon={<SparkleIcon />}
+          path="https://zinnli.github.io/"
+          target="_blank"
+          rel="noopener"
+        />
         <Link to="https://github.com/zinnli" target="_blank" rel="noopener">
           zinnli
         </Link>

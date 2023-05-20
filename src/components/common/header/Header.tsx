@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -9,27 +9,38 @@ import {
   HomeIcon,
   UserIcon,
 } from "assets/icons";
+import LinkButton from "../button/LinkButton";
+import ModalPortal from "../portal/ModalPortal";
+import LogoutModal from "../modal/LogoutModal";
 
 const Header = () => {
+  const [modalOpen, setModalOpen] = useState<boolean>();
+
+  const HandleLoginCheck = () => {
+    setModalOpen(true);
+    return;
+  };
+
+  const HandleModalShow = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Root>
       <IconWrapper>
-        <Link to="/like">
-          <ArrowIcon />
-        </Link>
-        <Link to="/likelist">
-          <HomeIcon />
-        </Link>
+        <LinkButton path="/like" icon={<ArrowIcon />} />
+        <LinkButton path="/likelist" icon={<HomeIcon />} />
         <IconRigthWrapper>
-          <Link to="/like">
-            <HeartIcon />
-          </Link>
-          <Link to="/mypage">
-            <UserIcon />
-          </Link>
-          <Link to="/likelist">
+          <LinkButton path="/like" icon={<HeartIcon />} />
+          <LinkButton path="/mypage" icon={<UserIcon />} />
+          <ModalBtn onClick={HandleLoginCheck}>
             <DotsIcon />
-          </Link>
+          </ModalBtn>
+          {modalOpen && (
+            <ModalPortal>
+              <LogoutModal onClose={HandleModalShow} />
+            </ModalPortal>
+          )}
         </IconRigthWrapper>
       </IconWrapper>
     </Root>
@@ -86,8 +97,28 @@ const IconRigthWrapper = styled.div`
       }
     }
 
-    & > a:last-of-type > svg {
+    & > button:last-of-type > svg {
       margin: 0 7px 0 0;
+    }
+  `}
+`;
+
+const ModalBtn = styled.button`
+  ${({ theme }) => css`
+    height: 30px;
+    width: 30px;
+    border-radius: 2px;
+    margin: 0 7px 0 0;
+    padding: 0 2px 0 0;
+
+    & > svg {
+      height: 30px;
+      width: 30px;
+      margin: 0 7px;
+
+      & > path {
+        stroke: ${theme.color.black};
+      }
     }
   `}
 `;
