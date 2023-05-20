@@ -7,14 +7,13 @@ import { ModalPortal, MypageModal } from "components";
 import { PencilIcon } from "assets";
 import { Theme } from "types/declare/theme";
 import { getUser } from "apis";
+import { useGetUser } from "services";
 
 const Mypage = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>();
 
-  const { data } = useQuery(["mypage"], getUser, {
-    refetchOnWindowFocus: false,
-  });
+  const { data } = useGetUser();
 
   const HandleLoginCheck = () => {
     setModalOpen(true);

@@ -1,16 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 
-import { login } from "apis";
 import { FormInput } from "components";
+import { useLogin } from "services";
+import type { PostLoginType } from "types";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -22,28 +21,14 @@ const Login = () => {
     },
   });
 
-  const { mutate: Login } = useMutation(login, {
-    onSuccess: (res: any) => {
-      localStorage.setItem("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
-    },
-    onError: (err: any) => {
-      alert(err.response.data.message);
-    },
-  });
+  const { mutate: loginMutate } = useLogin();
 
-  const handleLogin = (data: any) => {
-    Login(
-      {
-        userId: data.userId,
-        password: data.password,
+  const handleLogin = (data: PostLoginType) => {
+    loginMutate(data, {
+      onSuccess: () => {
+        navigate("/like");
       },
-      {
-        onSuccess: () => {
-          navigate("/like");
-        },
-      }
-    );
+    });
   };
 
   return (

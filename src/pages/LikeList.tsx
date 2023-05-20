@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import React from "react";
 import styled, { css } from "styled-components";
 
-import { getAffinity } from "apis";
 import { usePagination } from "hooks";
+import { useGetAffinity } from "services";
 import { ArrowIcon } from "assets";
 
 const LikeList = () => {
-  const { data } = useQuery(["affinity"], getAffinity);
+  const { data } = useGetAffinity();
 
   const {
     itemsSendToShow,
@@ -23,8 +22,6 @@ const LikeList = () => {
     setTab,
   } = usePagination(data);
 
-  if (!data) return null;
-
   return (
     <Root>
       <CommunityWrapper>
@@ -33,7 +30,7 @@ const LikeList = () => {
       </CommunityWrapper>
       {tab === "send" ? (
         <BoxWrapper id="send">
-          {itemsSendToShow.map((send: any) => (
+          {itemsSendToShow.map((send) => (
             <ListItem key={send.userId}>
               <Image src={send.profileImgUrl} />
               <Name>{send.nickname}</Name>
@@ -43,7 +40,7 @@ const LikeList = () => {
         </BoxWrapper>
       ) : (
         <BoxWrapper id="receive">
-          {itemsReceieveToShow.map((receieve: any) => (
+          {itemsReceieveToShow.map((receieve) => (
             <ListItem key={receieve.userId}>
               <Image src={receieve.profileImgUrl} />
               <Name>{receieve.nickname}</Name>

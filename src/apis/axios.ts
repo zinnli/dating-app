@@ -1,17 +1,15 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-const baseUrl = process.env.REACT_APP_AXIOS_API;
-
-const instance = axios.create({
+const instance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_AXIOS_API,
 });
 
-const createInstance = () => {
+const createInstance = (): AxiosInstance => {
   return setInterceptors(instance);
 };
 
-const setInterceptors = (instance: any) => {
-  instance.interceptors.request.use((config: any) => {
+const setInterceptors = (instance: AxiosInstance): AxiosInstance => {
+  instance.interceptors.request.use((config) => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       config.headers["Authorization"] = accessToken;
@@ -24,6 +22,6 @@ const setInterceptors = (instance: any) => {
 export const ax = createInstance();
 
 export const test = async () => {
-  const { data } = await instance.get("/test");
+  const { data } = await ax.get("/test");
   return data;
 };

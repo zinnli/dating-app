@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const usePagination = (data: any) => {
+import type { PaginationProps } from "types";
+
+const usePagination = (data: PaginationProps) => {
   const [currentReceievePage, setCurrentReceievePage] = useState(1);
   const [currentSendPage, setCurrentSendPage] = useState(1);
   const [tab, setTab] = useState("send");

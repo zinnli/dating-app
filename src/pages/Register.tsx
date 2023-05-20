@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 
-import { signup } from "apis";
 import { FormInput } from "components";
+import { useRegister } from "services";
+import type { PostSignupType } from "types";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,21 +23,16 @@ const Register = () => {
     },
   });
 
-  const { mutate: Signup } = useMutation(signup, {
-    onSuccess: (res: any) => {
-      console.log("success", res);
-      navigate("/");
-    },
-    onError: (err: any) => {
-      alert(err.response.data.message);
-    },
-  });
+  const { mutate: registerMutate } = useRegister();
 
-  const handleRegister = (data: any) => {
-    Signup({
-      userId: data.userId,
-      password: data.password,
-      nickname: data.nickname,
+  const handleRegister = (data: PostSignupType) => {
+    registerMutate(data, {
+      onSuccess: () => {
+        navigate("/");
+      },
+      onError: (err: any) => {
+        alert(err.response.data.message);
+      },
     });
   };
 
