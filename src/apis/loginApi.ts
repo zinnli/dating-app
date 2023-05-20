@@ -1,6 +1,7 @@
 import { ax } from "./axios";
+import type { PatchChangeInfoType, PostLoginType, PostSignupType } from "types";
 
-export const signup = async (req: any) => {
+export const signup = async (req: PostSignupType) => {
   const { data } = await ax.post("/auth/signup", {
     userId: req.userId,
     nickname: req.nickname,
@@ -10,7 +11,7 @@ export const signup = async (req: any) => {
   return data;
 };
 
-export const login = async (req: any) => {
+export const login = async (req: PostLoginType) => {
   const { data } = await ax.post("/auth/signin", {
     userId: req.userId,
     password: req.password,
@@ -24,11 +25,10 @@ export const getUser = async () => {
   return data;
 };
 
-export const changeInfo = async (req: any) => {
+export const changeInfo = async (req: PatchChangeInfoType) => {
   const { data } = await ax.patch("/member", {
     nickname: req.nickname,
     profileImgUrl: req.profileImgUrl,
-    headers: { "Content-type": "application/json; charset=UTF-8" },
   });
 
   return data;

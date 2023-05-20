@@ -33,7 +33,7 @@ const LikeList = () => {
       </CommunityWrapper>
       {tab === "send" ? (
         <BoxWrapper id="send">
-          {itemsSendToShow.map((send: any) => (
+          {itemsSendToShow.map((send) => (
             <ListItem key={send.userId}>
               <Image src={send.profileImgUrl} />
               <Name>{send.nickname}</Name>
@@ -43,7 +43,7 @@ const LikeList = () => {
         </BoxWrapper>
       ) : (
         <BoxWrapper id="receive">
-          {itemsReceieveToShow.map((receieve: any) => (
+          {itemsReceieveToShow.map((receieve) => (
             <ListItem key={receieve.userId}>
               <Image src={receieve.profileImgUrl} />
               <Name>{receieve.nickname}</Name>

@@ -12,7 +12,6 @@ interface FormInputProps {
   name?: string;
   type?: string;
   defaultValue?: string;
-  accept?: any;
 }
 
 const FormInput = ({
@@ -24,7 +23,6 @@ const FormInput = ({
   name,
   type,
   defaultValue,
-  accept,
 }: FormInputProps) => {
   return (
     <Root className={className}>
@@ -35,7 +33,6 @@ const FormInput = ({
         isError={isError}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        accept={accept}
         {...register}
       />
     </Root>

@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 
 import { signup } from "apis";
 import { FormInput } from "components";
+import type { PostSignupType } from "types";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -24,8 +25,7 @@ const Register = () => {
   });
 
   const { mutate: Signup } = useMutation(signup, {
-    onSuccess: (res: any) => {
-      console.log("success", res);
+    onSuccess: () => {
       navigate("/");
     },
     onError: (err: any) => {
@@ -33,7 +33,7 @@ const Register = () => {
     },
   });
 
-  const handleRegister = (data: any) => {
+  const handleRegister = (data: PostSignupType) => {
     Signup({
       userId: data.userId,
       password: data.password,

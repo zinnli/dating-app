@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 
 import { login } from "apis";
 import { FormInput } from "components";
+import type { PostLoginType } from "types";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Login = () => {
   });
 
   const { mutate: Login } = useMutation(login, {
-    onSuccess: (res: any) => {
+    onSuccess: (res) => {
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
     },
@@ -32,7 +33,7 @@ const Login = () => {
     },
   });
 
-  const handleLogin = (data: any) => {
+  const handleLogin = (data: PostLoginType) => {
     Login(
       {
         userId: data.userId,

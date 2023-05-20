@@ -1,7 +1,10 @@
-import { getMember, patchDislike, patchLike } from "apis";
+import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import styled, { css } from "styled-components";
+
+import { getMember, patchDislike, patchLike } from "apis";
+import type { PatchLikeType } from "types";
 
 const Like = () => {
   const [idx, setIdx] = useState(0);
@@ -10,7 +13,7 @@ const Like = () => {
   });
 
   const { mutate: PatchLike } = useMutation(patchLike, {
-    onSuccess: (res: any) => {
+    onSuccess: () => {
       setIdx(idx + 1);
     },
     onError: (err: any) => {
@@ -19,7 +22,7 @@ const Like = () => {
   });
 
   const { mutate: PatchDislike } = useMutation(patchDislike, {
-    onSuccess: (res: any) => {
+    onSuccess: () => {
       setIdx(idx + 1);
     },
     onError: (err: any) => {
@@ -41,7 +44,7 @@ const Like = () => {
   return (
     <>
       {data &&
-        data.slice(idx, idx + 1).map((item: any) => (
+        data.slice(idx, idx + 1).map((item: PatchLikeType) => (
           <Root key={item.userId}>
             <ImgWrapper>
               <img src={item.profileImgUrl} />

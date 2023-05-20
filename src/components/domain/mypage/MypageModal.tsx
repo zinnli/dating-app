@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { FormInput } from "components";
 import { changeInfo, getUser } from "apis";
 import { CancelIcon } from "assets";
+import type { PatchChangeInfoType } from "types";
 
 interface MypageModalProps {
   onClose: () => void;
@@ -34,7 +35,7 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
   });
 
   const { mutate: ChangeInfo } = useMutation(changeInfo, {
-    onSuccess: (res: any) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["mypage"]);
     },
     onError: (err: any) => {
@@ -42,7 +43,7 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
     },
   });
 
-  const submitHandleMyInfo = (data: any) => {
+  const submitHandleMyInfo = (data: PatchChangeInfoType) => {
     ChangeInfo(
       {
         nickname: data.nickname,
