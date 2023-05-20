@@ -6,7 +6,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const PrivateLayout = ({ children }: LayoutProps) => {
   return (
     <Root>
       <Header />
@@ -16,7 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default PrivateLayout;
 
 const Root = styled.main`
   display: flex;

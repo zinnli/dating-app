@@ -29,9 +29,9 @@ const Header = () => {
     <Root>
       <IconWrapper>
         <LinkButton path="/like" icon={<ArrowIcon />} />
-        <LinkButton path="/likelist" icon={<HomeIcon />} />
+        <LinkButton path="/like" icon={<HomeIcon />} />
         <IconRigthWrapper>
-          <LinkButton path="/like" icon={<HeartIcon />} />
+          <LinkButton path="/likelist" icon={<HeartIcon />} />
           <LinkButton path="/mypage" icon={<UserIcon />} />
           <ModalBtn onClick={HandleLoginCheck}>
             <DotsIcon />
