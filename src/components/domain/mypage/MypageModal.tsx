@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 
 import { FormInput } from "components";
-import { changeInfo, getUser } from "apis";
+import { useChangeInfo, useGetUser } from "services";
 import { CancelIcon } from "assets";
 import type { PatchChangeInfoType } from "types";
 
@@ -13,13 +12,7 @@ interface MypageModalProps {
 }
 
 const MypageModal = ({ onClose }: MypageModalProps) => {
-  const queryClient = useQueryClient();
-
-  const { data } = useQuery(["mypage"], getUser, {
-    refetchOnWindowFocus: false,
-    staleTime: 5000,
-    cacheTime: Infinity,
-  });
+  const { data } = useGetUser();
 
   const {
     watch,
@@ -34,30 +27,17 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
     },
   });
 
-  const { mutate: ChangeInfo } = useMutation(changeInfo, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["mypage"]);
-    },
-    onError: (err: any) => {
-      alert(err.response.data.message);
-    },
-  });
+  const { mutate: ChangeInfo } = useChangeInfo();
 
   const submitHandleMyInfo = (data: PatchChangeInfoType) => {
-    ChangeInfo(
-      {
-        nickname: data.nickname,
-        profileImgUrl: data.profileImgUrl,
+    ChangeInfo(data, {
+      onSuccess: () => {
+        onClose();
       },
-      {
-        onSuccess: () => {
-          onClose();
-        },
-        onError: () => {
-          console.log(data.profileImgUrl[0]);
-        },
-      }
-    );
+      onError: () => {
+        console.log(data.profileImgUrl);
+      },
+    });
   };
 
   return (

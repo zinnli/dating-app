@@ -13,3 +13,8 @@ export interface PatchChangeInfoType {
   nickname: string;
   profileImgUrl: string;
 }
+
+export interface TokenType {
+  accessToken: string;
+  refreshToken: string;
+}

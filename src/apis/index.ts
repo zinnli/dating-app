@@ -1,2 +1,2 @@
-export * from "./loginApi";
+export * from "./authApi";
 export * from "./likeApi";
