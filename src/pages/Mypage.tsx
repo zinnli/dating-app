@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import styled, { css } from "styled-components";
 
-import { getUser } from "apis/axios";
+import { ModalPortal, MypageModal } from "components";
 import { PencilIcon } from "assets";
 import { Theme } from "types/declare/theme";
+import { getUser } from "apis";
 
 const Mypage = () => {
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState<boolean>();
+
   const { data } = useQuery(["mypage"], getUser, {
     refetchOnWindowFocus: false,
   });
+
+  const HandleLoginCheck = () => {
+    setModalOpen(true);
+    return;
+  };
+
+  const HandleModalShow = () => {
+    setModalOpen(false);
+  };
 
   return (
     <Root>
@@ -18,9 +32,14 @@ const Mypage = () => {
       </ImgWrapper>
       <MyWrapper>
         <Name>{data?.nickname}</Name>
-        <ModalBtn>
+        <ModalBtn onClick={HandleLoginCheck}>
           <PencilIcon />
         </ModalBtn>
+        {modalOpen && (
+          <ModalPortal>
+            <MypageModal onClose={HandleModalShow} />
+          </ModalPortal>
+        )}
       </MyWrapper>
       <ButtonWrapper>
         <ILikeBtn>내가 좋아한 사람</ILikeBtn>
