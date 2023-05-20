@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
@@ -14,6 +14,25 @@ interface MypageModalProps {
 const MypageModal = ({ onClose }: MypageModalProps) => {
   const queryClient = useQueryClient();
 
+  const [profileImgUrl, setProfileImgUrl] = useState("");
+
+  // 파일 저장
+  const saveFileImage = (e: any) => {
+    setProfileImgUrl(URL.createObjectURL(e.target.files[0]));
+  };
+
+  // 파일 삭제
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(profileImgUrl);
+    setProfileImgUrl("");
+  };
+
+  const { data } = useQuery(["mypage"], getUser, {
+    refetchOnWindowFocus: false,
+    staleTime: 5000,
+    cacheTime: Infinity,
+  });
+
   const {
     watch,
     register,
@@ -27,12 +46,6 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
     },
   });
 
-  const { data } = useQuery(["mypage"], getUser, {
-    refetchOnWindowFocus: false,
-    staleTime: 5000,
-    cacheTime: Infinity,
-  });
-
   const { mutate: ChangeInfo } = useMutation(changeInfo, {
     onSuccess: (res: any) => {
       queryClient.invalidateQueries(["mypage"]);
@@ -42,7 +55,8 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
     },
   });
 
-  const handleMyInfo = (data: any) => {
+  const submitHandleMyInfo = (data: any) => {
+    const formData = new FormData();
     ChangeInfo(
       {
         nickname: data.nickname,
@@ -51,6 +65,9 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
       {
         onSuccess: () => {
           onClose();
+        },
+        onError: () => {
+          console.log(data.profileImgUrl[0]);
         },
       }
     );
@@ -61,22 +78,25 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
       <CancelBtn type="button" onClick={onClose}>
         <CancelIcon />
       </CancelBtn>
-      <FormWapper onSubmit={handleSubmit(handleMyInfo)}>
+      <FormWapper onSubmit={handleSubmit(submitHandleMyInfo)}>
         <FormInput
           id="nickname"
           name="닉네임"
           defaultValue={data.nickname}
-          register={register("nickname", {
-            required: true,
-          })}
+          register={register("nickname")}
         />
         <ImgWrapper
           type="file"
           id="profileImgUrl"
           name="이미지 업로드"
-          register={register("profileImgUrl")}
+          accept="image/*"
+          register={register("profileImgUrl", {
+            onChange: (e) => {
+              saveFileImage(e);
+            },
+          })}
         />
-        <ImgPreview></ImgPreview>
+        <ImgPreview src={profileImgUrl} />
         <Button disabled={Object.keys(errors).length !== 0}>수정</Button>
       </FormWapper>
     </Root>
@@ -146,8 +166,9 @@ const ImgWrapper = styled(FormInput)`
   `}
 `;
 
-const ImgPreview = styled.div`
+const ImgPreview = styled.img`
   width: 100%;
   height: 200px;
+  object-fit: contain;
   border: 1px solid red;
 `;

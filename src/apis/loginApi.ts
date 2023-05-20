@@ -28,6 +28,7 @@ export const changeInfo = async (req: any) => {
   const { data } = await ax.patch("/member", {
     nickname: req.nickname,
     profileImgUrl: req.profileImgUrl,
+    headers: { "Content-type": "application/json; charset=UTF-8" },
   });
 
   return data;
