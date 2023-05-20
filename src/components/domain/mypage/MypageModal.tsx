@@ -14,19 +14,6 @@ interface MypageModalProps {
 const MypageModal = ({ onClose }: MypageModalProps) => {
   const queryClient = useQueryClient();
 
-  const [profileImgUrl, setProfileImgUrl] = useState("");
-
-  // 파일 저장
-  const saveFileImage = (e: any) => {
-    setProfileImgUrl(URL.createObjectURL(e.target.files[0]));
-  };
-
-  // 파일 삭제
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(profileImgUrl);
-    setProfileImgUrl("");
-  };
-
   const { data } = useQuery(["mypage"], getUser, {
     refetchOnWindowFocus: false,
     staleTime: 5000,
@@ -41,7 +28,7 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
   } = useForm({
     mode: "all",
     defaultValues: {
-      nickname: "",
+      nickname: `${data.nickname}`,
       profileImgUrl: "",
     },
   });
@@ -56,7 +43,6 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
   });
 
   const submitHandleMyInfo = (data: any) => {
-    const formData = new FormData();
     ChangeInfo(
       {
         nickname: data.nickname,
@@ -82,21 +68,23 @@ const MypageModal = ({ onClose }: MypageModalProps) => {
         <FormInput
           id="nickname"
           name="닉네임"
-          defaultValue={data.nickname}
           register={register("nickname")}
         />
         <ImgWrapper
-          type="file"
+          type="text"
           id="profileImgUrl"
           name="이미지 업로드"
-          accept="image/*"
-          register={register("profileImgUrl", {
-            onChange: (e) => {
-              saveFileImage(e);
-            },
-          })}
+          placeholder="이미지 링크를 입력해주세요."
+          register={register("profileImgUrl")}
         />
-        <ImgPreview src={profileImgUrl} />
+        <ImgPreview
+          defaultValue={data.profileImgUrl}
+          src={
+            !!watch("profileImgUrl")
+              ? watch("profileImgUrl")
+              : data.profileImgUrl
+          }
+        />
         <Button disabled={Object.keys(errors).length !== 0}>수정</Button>
       </FormWapper>
     </Root>
@@ -158,17 +146,15 @@ const Button = styled.button`
 `;
 
 const ImgWrapper = styled(FormInput)`
-  ${({ theme }) => css`
-    & > input {
-      border: 0;
-      margin: 0;
-    }
-  `}
+  ${({ theme }) => css``}
 `;
 
 const ImgPreview = styled.img`
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  border: 1px solid red;
+  ${({ theme }) => css`
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border: 1px solid ${theme.color.gray_01};
+    background-color: ${theme.color.white};
+  `}
 `;

@@ -27,9 +27,7 @@ const Mypage = () => {
 
   return (
     <Root>
-      <ImgWrapper>
-        <img src={data?.profileImgUrl} />
-      </ImgWrapper>
+      <ImgWrapper src={data?.profileImgUrl} />
       <MyWrapper>
         <Name>{data?.nickname}</Name>
         <ModalBtn onClick={HandleLoginCheck}>
@@ -61,16 +59,18 @@ const Root = styled.section`
   height: 100%;
 `;
 
-const ImgWrapper = styled.div`
+const ImgWrapper = styled.img`
   ${({ theme }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
     height: 230px;
     width: 230px;
+    object-fit: contain;
+    border: 1px solid ${theme.color.gray_02};
     border-radius: 2px;
     margin-bottom: 20px;
-    background-color: ${theme.color.yellow_01};
+    background-color: ${theme.color.white};
   `}
 `;
 
