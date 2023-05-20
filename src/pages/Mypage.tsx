@@ -25,6 +25,12 @@ const Mypage = () => {
     setModalOpen(false);
   };
 
+  const ClickHandleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    navigate("/");
+  };
+
   return (
     <Root>
       <ImgWrapper src={data?.profileImgUrl} />
@@ -42,7 +48,7 @@ const Mypage = () => {
       <ButtonWrapper>
         <ILikeBtn>내가 좋아한 사람</ILikeBtn>
         <YouLikeBtn>나를 좋아한 사람</YouLikeBtn>
-        <LogoutBtn>로그아웃</LogoutBtn>
+        <LogoutBtn onClick={ClickHandleLogout}>로그아웃</LogoutBtn>
       </ButtonWrapper>
     </Root>
   );
