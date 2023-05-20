@@ -10,6 +10,8 @@ interface FormInputProps {
   register: UseFormRegisterReturn<string>;
   isError?: boolean;
   name?: string;
+  type?: string;
+  defaultValue?: string;
 }
 
 const FormInput = ({
@@ -19,13 +21,17 @@ const FormInput = ({
   placeholder,
   register,
   name,
+  type,
+  defaultValue,
 }: FormInputProps) => {
   return (
     <Root className={className}>
       <Label htmlFor={id}>{name}</Label>
       <Input
         id={id}
+        type={type}
         isError={isError}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         {...register}
       />

@@ -27,8 +27,3 @@ export const test = async () => {
   const { data } = await instance.get("/test");
   return data;
 };
-
-export const getUser = async () => {
-  const { data } = await ax.get("/auth/user");
-  return data;
-};

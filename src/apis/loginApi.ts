@@ -18,3 +18,17 @@ export const login = async (req: any) => {
 
   return data;
 };
+
+export const getUser = async () => {
+  const { data } = await ax.get("/auth/user");
+  return data;
+};
+
+export const changeInfo = async (req: any) => {
+  const { data } = await ax.patch("/member", {
+    nickname: req.nickname,
+    profileImgUrl: req.profileImgUrl,
+  });
+
+  return data;
+};
