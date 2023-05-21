@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 import { usePagination } from "hooks";
-import { useGetAffinity } from "services";
+import { useGetAffinity, usePatchDislike, usePatchLike } from "services";
 import { ArrowIcon } from "assets";
 
 const LikeList = () => {
-  const { data } = useGetAffinity();
+  const [idx, setIdx] = useState(0);
+  const { data, refetch } = useGetAffinity();
 
   const {
     itemsSendToShow,
@@ -22,6 +23,44 @@ const LikeList = () => {
     setTab,
   } = usePagination(data);
 
+  const { mutate: PatchLike } = usePatchLike();
+  const { mutate: PatchDislike } = usePatchDislike();
+
+  const handleLike = (e: React.MouseEvent) => {
+    PatchLike(
+      {
+        targetUserId: data.receieve[idx].userId,
+      },
+      {
+        onSuccess: () => {
+          setIdx(idx + 1);
+          refetch();
+        },
+        onError: (err: any) => {
+          console.log(err.response.data.message);
+        },
+      }
+    );
+  };
+
+  const handleDislike = (e: React.MouseEvent) => {
+    PatchDislike(
+      {
+        targetUserId: data.send[idx].userId,
+      },
+      {
+        onSuccess: () => {
+          setIdx(idx + 1);
+          console.log(e);
+          refetch();
+        },
+        onError: (err: any) => {
+          console.log(err.response.data.message);
+        },
+      }
+    );
+  };
+
   if (!data) return null;
 
   return (
@@ -36,7 +75,7 @@ const LikeList = () => {
             <ListItem key={send.userId}>
               <Image src={send.profileImgUrl} />
               <Name>{send.nickname}</Name>
-              <ConfirmBtn>취소</ConfirmBtn>
+              <ConfirmBtn onClick={(e) => handleDislike(e)}>취소</ConfirmBtn>
             </ListItem>
           ))}
         </BoxWrapper>
@@ -46,7 +85,7 @@ const LikeList = () => {
             <ListItem key={receieve.userId}>
               <Image src={receieve.profileImgUrl} />
               <Name>{receieve.nickname}</Name>
-              <ConfirmBtn>받기</ConfirmBtn>
+              <ConfirmBtn onClick={(e) => handleLike(e)}>받기</ConfirmBtn>
             </ListItem>
           ))}
         </BoxWrapper>

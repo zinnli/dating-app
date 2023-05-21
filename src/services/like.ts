@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { getAffinity, getMember, patchDislike, patchLike } from "apis";
 import type { PatchAffinityType } from "types";
@@ -23,18 +23,27 @@ export const useGetMember = () => {
     refetchOnWindowFocus: false,
     staleTime: 5000,
     cacheTime: Infinity,
-    enabled: true,
   });
 };
 
 export const usePatchLike = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (req: PatchAffinityType) => patchLike(req),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["member"]);
+    },
   });
 };
 
 export const usePatchDislike = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (req: PatchAffinityType) => patchDislike(req),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["member"]);
+    },
   });
 };
