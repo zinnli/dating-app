@@ -9,9 +9,9 @@ export default function Router() {
       <Routes>
         <Route element={<PublicRouter />}>
           <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<PrivateRouter />}>
-          <Route path="/register" element={<Register />} />
           <Route path="/like" element={<Like />} />
           <Route path="/likelist" element={<LikeList />} />
           <Route path="/mypage" element={<Mypage />} />

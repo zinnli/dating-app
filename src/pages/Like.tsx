@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
-import type { PatchLikeType } from "types";
 import { useGetMember, usePatchDislike, usePatchLike } from "services";
+import type { PatchLikeType } from "types";
 
 const Like = () => {
   const [idx, setIdx] = useState(0);
